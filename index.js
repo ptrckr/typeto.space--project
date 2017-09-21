@@ -25,7 +25,7 @@ const levelData = [
 ]
 
 // Routes
-app.get('/level/:id', (req, res, next) => {
+app.get('/typetospace/level/:id', (req, res, next) => {
   if (req.params.id in levelData) {
     res.json(levelData[req.params.id])
   } else {
@@ -33,11 +33,11 @@ app.get('/level/:id', (req, res, next) => {
   }
 })
 
-app.get('/', (req, res, next) => {
+app.get('/typetospace', (req, res, next) => {
   res.render('index')
 })
 
 module.exports = {
-  url: 'www.ptrckr.tokyo/typetospace',
+  url: 'ptrckr.tokyo',
   app: app
 }
