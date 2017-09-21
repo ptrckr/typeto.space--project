@@ -1,0 +1,469 @@
+// Reset
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+*::after { box-sizing: border-box; }
+
+a { text-decoration: none; }
+ol { list-style: none; }
+
+// Colors
+@green: #63FBD1;
+@yellow: #F9D566;
+@blue: #638DFF;
+@red: #F9647F;
+@black: #000;
+@lightBlack: #1E2126;
+@darkGray: #8A9099;
+@gray: #B4B8BF;
+@lightGray: #EDEFF2;
+@white: #FAFBFC;
+
+// Fonts
+@proximaFont: 'proxima-nova', sans-serif;
+@anonymousFont: 'anonymous-pro', monospace;
+@fontRegular: 400;
+@fontMedium: 500;
+@fontBold: 700;
+
+// Font Sets
+.proximaBold70px { font: @fontBold 70px/70px @proximaFont; }
+.proximaMedium24px { font: @fontMedium 24px @proximaFont; }
+.proximaMedium20px { font: @fontMedium 20px @proximaFont; }
+.proximaBold12px { font: @fontBold 12px @proximaFont; }
+.proximaBold14px { font: @fontBold 14px @proximaFont; }
+.anonymousRegular30px { font: @fontRegular 30px @anonymousFont; }
+
+// Animations
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  } to {
+    transform: rotate(360deg);
+  }
+}
+
+.spin {
+  animation: spin 15s linear infinite;
+}
+
+// Body
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  font: @fontMedium 20px @proximaFont;
+}
+
+body[data-state='launchScene'] {
+  .launchScene { left: 0%; }
+  .levelSelectionScene { left: 100%; }
+  .levelScene { left: 100%; }
+}
+
+body[data-state='levelSelectionScene'] {
+  .launchScene { left: -100%; }
+  .levelSelectionScene { left: 0%; }
+  .levelScene { left: 100%; }
+}
+
+body[data-state='levelScene'] {
+  .launchScene { left: -100%; }
+  .levelSelectionScene { left: -100%; }
+  .levelScene { left: 0%; }
+}
+
+div[class$='Scene'] {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  transition: left 1000ms ease;
+  overflow: hidden;
+}
+
+// Launch
+.launchScene {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+
+  header {
+    display: flex;
+    width: 100%;
+    max-width: 1920px;
+    justify-content: space-around;
+    height: 75%;
+    align-items: center;
+  }
+
+  footer {
+    position: relative;
+    width: 100%;
+    height: 25%;
+    background-color: @white;
+  }
+
+  .levelContainer {
+    margin-top: 0;
+    top: -30px;
+  }
+}
+
+h1 {
+  color: @black;
+  text-align: center;
+}
+
+.progressIndicator {
+  position: relative;
+
+  &::after {
+    content: '';
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    border-width: 2px;
+    border-style: solid;
+    position: absolute;
+    opacity: .7;
+  }
+
+  svg {
+    display: block;
+    fill: @black;
+  }
+}
+
+.progressIndicatorGreen::after { border-color: @green; }
+.progressIndicatorYellow::after { border-color: @yellow; }
+.progressIndicatorBlue::after { border-color: @blue; }
+.progressIndicatorRed::after { border-color: @red; }
+
+.progressIndicatorBottomRight::after { left: 50%; top: 50%; }
+.progressIndicatorBottomLeft::after { right: 50%; top: 50%; }
+.progressIndicatorTopLeft::after { right: 50%; bottom: 50%; }
+.progressIndicatorTopRight::after { left: 50%; bottom: 50%; }
+
+
+.buildNotice {
+  position: absolute;
+  left: 30px;
+  bottom: 30px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  padding: 0 30px;
+  text-transform: uppercase;
+  background: #FFF;
+  border-radius: 30px;
+  white-space: pre;
+  color: @lightGray;
+
+  & svg {
+    margin-right: 15px;
+    fill: @lightGray;
+  }
+
+  &:hover {
+    background: @black;
+    color: @darkGray;
+
+    a {
+      border-color: @lightBlack;
+      color: @gray;
+    }
+
+    & svg {
+      fill: @darkGray;
+    }
+  }
+
+  a {
+    color: @lightGray;
+    padding: 3px 0 1px;
+    border-bottom: 2px solid #FFF;
+
+    &:hover {
+      color: @white;
+      border-color: @darkGray;
+    }
+  }
+}
+
+// Game
+.keys {
+  position: absolute;
+  left: 0;
+  top: 0;
+
+  li {
+    .anonymousRegular30px();
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    border-radius: 2px;
+    text-align: center;
+    line-height: 60px;
+  }
+
+  /* Pressed Keys */
+  li {
+    border: 2px solid @lightGray;
+    color: @lightGray;
+  }
+
+  /* Unpressed Keys */
+  .currentKey, .currentKey ~ li {
+    border: none;
+    background-color: @lightGray;
+    color: @black;
+  }
+
+  /* Current Keys */
+  .currentKey, .currentKey + li {
+    background-color: @black;
+    color: @white;
+  }
+
+  .currentKey {
+    color: @black;
+  }
+}
+
+.ball {
+  content: '';
+  position: absolute;
+  width: 26px;
+  height: 26px;
+  margin: 17px; 
+  border-radius: 2px;
+  background-image: url('../img/gradient.png');
+  background-position: center;
+  background-repeat: no-repeat;
+  transform: rotate(0deg);
+  .spin();
+  z-index: 100;
+}
+
+.finished {
+  .goal {
+    &::before {
+      width: 1600%;
+      height: 1600%;
+      left: -750%;
+      top: -750%;
+      border-radius: 20%;
+      opacity: 0;
+    }
+  }
+}
+
+.goal {
+  &::before, &::after {
+    content: '';
+    position: absolute;
+    transform: rotate(0deg);
+    border-radius: 2px;
+    .spin();
+    transition: all 600ms 200ms ease-out;
+  }
+
+  &::before {
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    background-image: url('../img/gradient.png');
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+  }
+
+  &::after {
+    width: 24px;
+    height: 24px;
+    left: 50%;
+    top: 50%;
+    margin-left: -12px;
+    margin-top: -12px;
+    background: @black;
+  }
+}
+
+
+/* Level Selection Wrapper */
+.levelSelectionScene {
+
+}
+
+/* Level Selection */
+.levelSelectionWrapper {
+  width: 360px;
+  height: 360px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-left: -180px;
+  margin-top: -180px;
+}
+
+.levelSelectionList {
+  display: flex;
+  transition: margin 500ms ease-out;
+
+  li {
+    position: relative;
+    width: 360px;
+    height: 360px;
+    flex-shrink: 0;
+    background: @lightGray;
+
+    &.finished {
+      .levelStatusIndicator {
+        top: 0;
+      }
+    }
+
+    &.finishedWithErrors .levelStatusIndicator {
+      top: 50%;
+      margin-top: -50px;
+      border-radius: 0;
+    }
+
+    &.activeLevel .title {
+      color: @gray;
+    }
+
+    &:not(:last-child) {
+      margin-right: 30px;
+    }
+
+    .title {
+      width: 100%;
+      position: absolute;
+      bottom: 100%;
+      .proximaMedium24px();
+      color: @lightGray;
+      margin-bottom: 13px;
+    }
+  }
+}
+
+.levelStatusIndicator {
+  position: absolute;
+  width: 100px;
+  height: 100px;
+  left: 50%;
+  bottom: 0;
+  margin-left: -50px;
+  border-radius: 50px;
+  background: @black;
+}
+
+.currentLevelId {
+  position: absolute;
+  bottom: 100%;
+  margin-bottom: 42px;
+  .proximaBold70px();
+  color: @black;
+}
+
+/* Keyboard Shortcuts Level Selection */
+// .keyboardShortcuts {
+//   position: absolute;
+//   left: 0;
+//   top: 0;
+//   width: 35%;
+//   background: #000;
+//   height: 100%;
+//   color: #fff;
+//   display: flex;
+//   flex-direction: column;
+//   align-items: center;
+//   justify-content: center;
+//   transition: all 500ms ease-in;
+//   overflow: hidden;
+//   z-index: 100;
+
+//   &.hidden {
+//     opacity: 0;
+//     width: 0%;
+//   }
+// }
+
+.keyboardShortcuts {
+  position: absolute;
+  display: flex;
+  transition: all 350ms ease-out;
+
+  &Top { top: 30px; &.hidden { top: -20px; } }
+  &Right { right: 30px; &.hidden { right: -20px; } }
+  &Bottom { bottom: 30px; &.hidden { bottom: -20px; } }
+  &Left {
+    left: 30px;
+    &.hidden { left: -20px; }
+    dl { margin-right: 18px; }
+  }
+
+  &HorizontalCenter {
+    justify-content: center;
+    width: 100%;
+    dl { margin: 0 20px; }
+  }
+
+  &.hidden { opacity: 0; }
+}
+
+dl {
+  display: flex;
+  align-items: center;
+  width: auto;
+}
+
+dd {
+  background-color: @lightGray;
+  color: @black;
+  text-align: center;
+  border-radius: 3px;
+  .proximaBold12px();
+  width: 30px;
+  height: 30px;
+  line-height: 30px;
+
+  &.wide {
+    width: auto;
+    padding: 0 10px;
+  }
+}
+
+dt {
+  color: @lightBlack;
+  .proximaBold14px();
+  text-align: center;
+  margin-left: 10px;
+}
+
+/* LevelScene */
+.levelScene {
+
+}
+
+.levelContainer {
+  width: 60px;
+  height: 60px;
+  position: absolute;
+  left: 50%;
+  margin-left: -30px;
+  top: 50%;
+  margin-top: -30px;
+}
+
+
+
+

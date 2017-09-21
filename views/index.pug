@@ -1,0 +1,83 @@
+doctype html
+head
+  meta(charset='utf-8')
+  title typeto.space
+  script(src='https://use.typekit.net/apv4eqh.js')
+  script try{Typekit.load({ async: true });}catch(e){}
+  link(rel='icon' href='favicon.png' type='image/png')
+  link(rel='stylesheet' href='css/style.css')
+  meta(name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1')
+body
+  div(class='launchScene')
+    header
+      div(class='progressIndicator progressIndicatorGreen progressIndicatorBottomRight')
+        svg(width='100' height='100' viewbox='0 0 100 100')
+          circle(cx='50' cy='50' r='50')
+      div(class='progressIndicator progressIndicatorYellow progressIndicatorBottomLeft')
+        svg(width='100' height='100' viewbox='0 0 100 100')
+          polygon(points='50,0 100,100 0,100')
+      h1(class='proximaBold70px') Challenge your<br/>typing speed.
+      div(class='progressIndicator progressIndicatorBlue progressIndicatorTopLeft')
+        svg(width='100' height='100' viewbox='0 0 100 100')
+          polygon(points='0,0 100,0 50,100')
+      div(class='progressIndicator progressIndicatorRed progressIndicatorTopRight')
+        svg(width='100' height='100' viewbox='0 0 100 100')
+          rect(x='0' y='0' width='100' height='100')
+    footer
+      div(class='levelContainer' data-levelid='0')
+      div(class='buildNotice proximaBold12px')
+        svg(class='buildNoticeLogo' width='20px' height='20px' viewBox='0 0 20 20')
+          path(d='M10,0 L0,16 L20,16 L10,0 Z M10,3.77355 L12.65005,8.0137 L8.91205,14 L3.6085,14 L10,3.77355 Z M13.82955,9.90085 L16.39155,14 L11.26995,14 L13.82955,9.90085 Z M0,20 L0,18 L20,18 L20,20 L0,20 Z')
+        | Build by 
+        a(href='http://ptrckr.tokyo') ptrckr.tokyo
+        |   “  
+        a(href='mailto:hello@typeto.space') hello@typeto.space
+  div(class='levelSelectionScene')
+    div(class='keyboardShortcuts keyboardShortcutsTop keyboardShortcutsLeft')
+      dl
+        dd T
+        dt Toggle Shortcuts
+    div(class='keyboardShortcuts keyboardShortcutsBottom keyboardShortcutsHorizontalCenter')
+      dl
+        dd F
+        dt Previous Level  /  ←
+      dl
+        dd J
+        dt Next Level  /  →
+      dl
+        dd(class='wide') Space
+        dt Play Level
+      dl
+        dd(class='wide') Enter
+        dt Restart Level
+      dl
+        dd(class='wide') esc
+        dt Exit Level
+    //- div(class='keyboardShortcuts')
+    //-   dl
+    //-     dt Next Level  /  →
+    //-     dd J
+    //-   dl
+    //-     dt Previous Level  /  ←
+    //-     dd F
+    //-   dl
+    //-     dt Play Level
+    //-     dd Space
+    //-   dl
+    //-     dt Restart Level
+    //-     dd Enter
+    //-   dl
+    //-     dt Exit Level
+    //-     dd esc
+    //-   dl
+    //-     dt Toggle Shortcuts
+    //-     dd T
+  div(class='levelScene')
+    div(class='levelContainer')
+  script(src='js/library.js' type='text/javascript')
+  script(src='js/SceneController.js' type='text/javascript')
+  script(src='js/LevelData.js' type='text/javascript')
+  script(src='js/LevelScene.js' type='text/javascript')
+  script(src='js/LevelSelectionScene.js' type='text/javascript')
+  script(src='js/Level.js' type='text/javascript')
+  script(src='js/typeto.js' type='text/javascript')
