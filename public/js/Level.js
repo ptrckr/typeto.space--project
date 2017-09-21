@@ -45,7 +45,7 @@ class Level {
   }
 
   static loadLevelDataWithId(levelId, cb) {
-    Http.get(`level/${levelId}`, (err, levelData) => {
+    Http.get(`typetospace/level/${levelId}`, (err, levelData) => {
       if (!err) {
         cb(null, levelData)
       }
